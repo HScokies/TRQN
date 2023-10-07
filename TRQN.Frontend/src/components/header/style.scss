@@ -1,0 +1,50 @@
+.header {
+    min-height: 3.5rem;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+&.main {
+        background: rgba(192, 192, 192, 0.01);
+        backdrop-filter: blur(2.5px);
+    }
+}
+.logo {
+    color: #000;
+    font-family: Fira Code;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-right: 50px;
+}
+
+.header > .container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.navlinks {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+
+    &-link {
+        color: #000;
+        font-family: Fira Code;
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        cursor: pointer;
+        transition: .3s all ease-out;
+    }
+
+    &:hover a:not(:hover) {
+        filter: blur(50%);
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+}
