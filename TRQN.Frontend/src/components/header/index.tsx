@@ -4,15 +4,30 @@ import './style.scss'
 import { useState } from "react";
 
 const Header = ({ page, isAdmin = true }: Props) => {
-	const [isCollapsed, setIsCollapsed] = useState(true)
+	const [isCollapsed, setIsCollapsed] = useState(true);
 	const [Search, setSearch] = useState("");
+	const [menuOpened, setMenuOpened] = useState(false);
+
 	return (
 		<header className={"header " + page} >
-			<div className="header-container">
+			<div className={"header-container"+(isCollapsed?"":" searchActive")}>
 				<div className="container">
-					<NavLink to='/' className="logo">
-						TRQN
-					</NavLink>
+					<span className="logo">
+						<svg
+							onClick={() => setMenuOpened(true)}
+							width="30" height="30"
+							viewBox="0 0 29 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg">
+							<path d="M1 12H28" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M1 23H28" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M1 1H28" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+
+						<NavLink to='/'>
+							TRQN
+						</NavLink>
+					</span>
 					<nav className="navlinks">
 						<NavLink to='/' className="navlinks-link">
 							Sneakers
@@ -33,12 +48,12 @@ const Header = ({ page, isAdmin = true }: Props) => {
 					<div className={isCollapsed ? "search collapsed" : "search opened"} >
 						<div className="search_field container">
 							<input className="" value={Search} onChange={(e) => setSearch(e.target.value)} />
-							<svg onClick={() => { setIsCollapsed(!isCollapsed); setSearch("") }} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg onClick={() => { setIsCollapsed(true); setSearch("") }} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M7 17L16.8995 7.10051" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" />
 								<path d="M7 7.00001L16.8995 16.8995" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" />
 							</svg>
 						</div>
-						<span className="search iconwrapper" onClick={() => setIsCollapsed(!isCollapsed)}>
+						<span className="search iconwrapper" onClick={() => setIsCollapsed(false)}>
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M8.75004 14.1667C11.7416 14.1667 14.1667 11.7416 14.1667 8.75004C14.1667 5.7585 11.7416 3.33337 8.75004 3.33337C5.7585 3.33337 3.33337 5.7585 3.33337 8.75004C3.33337 11.7416 5.7585 14.1667 8.75004 14.1667Z" stroke="black" strokeLinejoin="round" />
 								<path d="M16.372 16.9614C16.5347 17.124 16.7986 17.124 16.9613 16.9614C17.124 16.7986 17.124 16.5348 16.9613 16.372L16.372 16.9614ZM16.9613 16.372L12.7947 12.2054L12.2053 12.7947L16.372 16.9614L16.9613 16.372Z" fill="black" />
@@ -67,6 +82,39 @@ const Header = ({ page, isAdmin = true }: Props) => {
 							</div>
 					}
 				</div>
+			</div>
+
+			<div className={menuOpened ? "BurgerMenu active" : "BurgerMenu inactive"}>
+				<div className="header">
+					<NavLink to='/' onClick={() => setMenuOpened(false)} className="logo">
+						TRQN
+					</NavLink>
+					<svg
+						onClick={() => setMenuOpened(false)}
+						width="29" height="29"
+						viewBox="0 0 29 29"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<g id="Close">
+							<path id="Vector" d="M1 28L28 1.27136" stroke="#D9D9D9" strokeLinecap="round" strokeLinejoin="round" />
+							<path id="Vector_2" d="M1 1L28 27.7287" stroke="#D9D9D9" strokeLinecap="round" strokeLinejoin="round" />
+						</g>
+					</svg>
+				</div>
+				<nav className="navlinks">
+					<NavLink to='/'onClick={() => setMenuOpened(false)} className="navlinks-link">
+						Sneakers
+					</NavLink>
+					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+						High-Tops
+					</NavLink>
+					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+						Retro
+					</NavLink>
+					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+						Skate
+					</NavLink>
+				</nav>
 			</div>
 		</header>
 	)

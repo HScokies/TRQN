@@ -21,6 +21,7 @@
 
 a, a:link, a:visited  {
     text-decoration: none;
+	color: unset;
 }
 
 a:hover  {
@@ -92,4 +93,9 @@ label {
 
 legend {
 	display: block;
+}
+
+body{
+	overflow-y: hidden;
+	background: #F9F9F9;
 }
