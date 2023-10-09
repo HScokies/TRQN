@@ -1,5 +1,5 @@
 import './styles.scss'
-import Header from "src/components/header";
+import {Header} from "src/components";
 
 
 const MainPage = () => (

@@ -1,15 +1,17 @@
+@import 'styles/variables.scss';
 .header {
     min-height: 3.5rem;
     border: 1px solid black;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 
-&.main {
+    &.main {
         background: rgba(192, 192, 192, 0.01);
         backdrop-filter: blur(2.5px);
     }
 }
+
 .logo {
     color: #000;
     font-family: Fira Code;
@@ -20,10 +22,14 @@
     margin-right: 50px;
 }
 
-.header > .container {
+.header>.container {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+
+    &.icons {
+        gap: 1em;
+    }
 }
 
 .navlinks {
@@ -33,7 +39,6 @@
 
     &-link {
         color: #000;
-        font-family: Fira Code;
         font-size: 1.5rem;
         font-style: normal;
         font-weight: 400;
@@ -45,6 +50,60 @@
     &:hover a:not(:hover) {
         filter: blur(50%);
         color: transparent;
-        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.iconwrapper {
+    outline: 1px solid black;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.search {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    &_field{
+        background: $gray_bar;
+        border-radius: 50px;
+        transition: width .7s ease-in-out;
+        width: 0em;
+        height: 2em;
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        position: relative;
+        &>input{
+            visibility: hidden;
+            width: 17.5em;
+        }
+        &>svg{
+            visibility: hidden; 
+            right: 5px;
+            width: 1.5em; 
+            position: absolute;
+        }
+    }
+    &.opened > .iconwrapper{
+        display: none; 
+    }
+    &.opened &_field{
+        display: flex;
+        padding-inline: .5em;
+        width: 20em;
+        overflow: hidden;
+        &>input{
+            visibility: visible;
+        }
+        &>svg{
+            visibility: visible;
+        }
     }
 }
