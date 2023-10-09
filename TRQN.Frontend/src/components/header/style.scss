@@ -1,10 +1,29 @@
 @import 'styles/variables.scss';
+
 .header {
     min-height: 3.5rem;
     border: 1px solid black;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    padding-inline: 10px;
+
+    &-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 2560px;
+
+        &>.container {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+
+            &.icons {
+                gap: 1em;
+            }
+        }
+    }
 
     &.main {
         background: rgba(192, 192, 192, 0.01);
@@ -20,16 +39,6 @@
     font-weight: 400;
     line-height: normal;
     margin-right: 50px;
-}
-
-.header>.container {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-
-    &.icons {
-        gap: 1em;
-    }
 }
 
 .navlinks {
@@ -70,39 +79,47 @@
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    &_field{
+
+    &_field {
         background: $gray_bar;
         border-radius: 50px;
-        transition: width .7s ease-in-out;
+        transition: none;
         width: 0em;
         height: 2em;
         display: flex;
         align-items: center;
         flex-flow: row nowrap;
         position: relative;
-        &>input{
+
+        &>input {
             visibility: hidden;
             width: 17.5em;
         }
-        &>svg{
-            visibility: hidden; 
+
+        &>svg {
+            visibility: hidden;
             right: 5px;
-            width: 1.5em; 
+            width: 1.5em;
             position: absolute;
         }
     }
-    &.opened > .iconwrapper{
-        display: none; 
+
+    &.opened>.iconwrapper {
+        display: none;
     }
-    &.opened &_field{
+
+    &.opened &_field {
+        transition: width .7s ease-in-out;
         display: flex;
         padding-inline: .5em;
         width: 20em;
         overflow: hidden;
-        &>input{
+
+        &>input {
             visibility: visible;
         }
-        &>svg{
+
+        &>svg {
             visibility: visible;
         }
     }
