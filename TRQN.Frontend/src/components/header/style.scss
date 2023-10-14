@@ -1,12 +1,16 @@
 @import 'styles/variables.scss';
 
-.header {
-    min-height: 3.5rem;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    padding-inline: 10px;
 
+.header {
+    position: fixed;
+    min-height: 3.5rem;
+    // outline: 1px solid black;
+    display: flex;
+    padding-inline: 10px;
+    background: rgba(255, 255, 255, .91);
+    backdrop-filter: blur(2.5px);
+    overflow-x: clip;
+    width: 100%;
     &-container {
         display: flex;
         justify-content: space-between;
@@ -23,11 +27,6 @@
                 gap: 1em;
             }
         }
-    }
-
-    &.main {
-        background: rgba(192, 192, 192, 0.01);
-        backdrop-filter: blur(2.5px);
     }
 }
 
@@ -135,6 +134,15 @@
 }
 
 @media screen and (max-width: 1100px) {
+    .header{
+        padding: 0;
+        &-container{
+            margin-inline: 10px;
+            &.searchActive{
+                margin-inline: 0;
+            }
+        }
+    }
     .navlinks {
         display: none;
     }
@@ -166,6 +174,7 @@
         &>.header {
             color: white;
             justify-content: space-between;
+            padding-inline: 10px;
         }
 
         &>.navlinks {

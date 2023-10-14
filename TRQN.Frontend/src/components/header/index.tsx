@@ -1,15 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { Profile, Search, Cart } from "icons/index";
 import './style.scss'
 import { useState } from "react";
 
-const Header = ({ page, isAdmin = true }: Props) => {
+const Header = ({ isAdmin = true }: Props) => {
 	const [isCollapsed, setIsCollapsed] = useState(true);
 	const [Search, setSearch] = useState("");
 	const [menuOpened, setMenuOpened] = useState(false);
 
 	return (
-		<header className={"header " + page} >
+		<header className={"header"} >
 			<div className={"header-container"+(isCollapsed?"":" searchActive")}>
 				<div className="container">
 					<span className="logo">
@@ -121,7 +120,6 @@ const Header = ({ page, isAdmin = true }: Props) => {
 }
 
 export interface Props {
-	page: string,
 	isAdmin: boolean
 }
 

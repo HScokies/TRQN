@@ -1,8 +1,14 @@
 import './styles.scss'
-import {Header} from "src/components";
+import { Header, Hero, Footer } from "src/components";
+
 
 
 const MainPage = () => (
-    <Header page="main" />
+    <>
+        <Header isAdmin={true}/>
+        <Hero/>
+        <Footer/>
+    </>
+
 )
 export default MainPage

@@ -96,6 +96,13 @@ legend {
 }
 
 body{
-	overflow-y: hidden;
 	background: #F9F9F9;
+}
+
+#root{
+	min-height: 100vh;
+	max-width: 100vw;
+	display: flex;
+	flex-flow: column nowrap;
+	overflow-x: hidden;
 }
