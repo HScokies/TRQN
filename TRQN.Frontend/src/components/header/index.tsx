@@ -7,13 +7,25 @@ const Header = ({ isAdmin = true }: Props) => {
 	const [Search, setSearch] = useState("");
 	const [menuOpened, setMenuOpened] = useState(false);
 
+	const toggleMenu = (isActive: boolean) => {
+		if (!isActive){
+			setMenuOpened(false);
+			document.body.classList.remove("burger-menu");
+		}
+		else{
+			setMenuOpened(true)
+			document.body.classList.add("burger-menu");
+		}
+
+	}
+
 	return (
 		<header className={"header"} >
 			<div className={"header-container"+(isCollapsed?"":" searchActive")}>
 				<div className="container">
 					<span className="logo">
 						<svg
-							onClick={() => setMenuOpened(true)}
+							onClick={() => toggleMenu(true)}
 							width="30" height="30"
 							viewBox="0 0 29 24"
 							fill="none"
@@ -85,11 +97,11 @@ const Header = ({ isAdmin = true }: Props) => {
 
 			<div className={menuOpened ? "BurgerMenu active" : "BurgerMenu inactive"}>
 				<div className="header">
-					<NavLink to='/' onClick={() => setMenuOpened(false)} className="logo">
+					<NavLink to='/' onClick={() => toggleMenu(false)} className="logo">
 						TRQN
 					</NavLink>
 					<svg
-						onClick={() => setMenuOpened(false)}
+						onClick={() => toggleMenu(false)}
 						width="29" height="29"
 						viewBox="0 0 29 29"
 						fill="none"
@@ -101,16 +113,16 @@ const Header = ({ isAdmin = true }: Props) => {
 					</svg>
 				</div>
 				<nav className="navlinks">
-					<NavLink to='/'onClick={() => setMenuOpened(false)} className="navlinks-link">
+					<NavLink to='/'onClick={() => toggleMenu(false)} className="navlinks-link">
 						Sneakers
 					</NavLink>
-					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
 						High-Tops
 					</NavLink>
-					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
 						Retro
 					</NavLink>
-					<NavLink to='/' onClick={() => setMenuOpened(false)} className="navlinks-link">
+					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
 						Skate
 					</NavLink>
 				</nav>

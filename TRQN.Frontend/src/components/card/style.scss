@@ -1,0 +1,116 @@
+.card {
+    margin-top: 3em;
+    padding: 1em;
+    cursor: pointer;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 40%;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+
+    &-info {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.3em;
+
+        &_title {
+            color: #000;
+            text-align: center;
+            font-size: 3vw;
+            font-style: normal;
+            font-weight: 450;
+            line-height: normal;
+        }
+
+        &_descr {
+            color: #000;
+            text-align: center;
+            font-size: 2.25vw;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+
+        &_image {
+            display: block;
+            width: 100%;
+            height: auto;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
+
+        &_price {
+            text-align: center;
+            color: #000;
+            text-align: center;
+            font-size: 2.5vw;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+
+    @media screen and (min-width: 1101px) {
+        &.big {
+            flex-flow: row-reverse;
+            width: 87%;
+            padding: 2em 3em;
+
+            & .card-info {
+                justify-content: center;
+
+                &_title {
+                    text-align: right;
+                    font-size: 3.5vw;
+                }
+
+                &_descr {
+                    text-align: right;
+                    font-size: 2vw;
+                }
+
+                &_price {
+                    text-align: right;
+                    font-size: 3vw;
+                    font-style: normal;
+                    line-height: normal;
+                }
+            }
+        }
+    }
+}
+
+
+/*
+Mobile Version
+*/
+
+@media screen and (max-width: 1100px) {
+    .card {
+        width: 100%;
+        flex-flow: column-reverse;
+
+        &-info {
+            &_title {
+                font-size: 100%;
+                font-weight: 300; 
+                text-align: left;
+            }
+
+            &_descr {
+                display: none;
+            }
+
+            &_price {
+                text-align: left;
+                font-size: 5vw;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+        }
+    }
+}

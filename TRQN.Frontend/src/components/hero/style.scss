@@ -1,11 +1,38 @@
-.Hero{
-    display: flex;
-    justify-content: center;
+.hero{
     width: 100%;
-    min-height: 100vh;
-    &>img{
+    height: 100vh;
+    max-width: 2560px;
+    max-height: 2160px;
+    position: relative;
+    &-logo_container{
         width: 100%;
-        max-width: 2560px;
-        outline: 100% solid black;
+    }
+    &>#background{
+        position: absolute;
+        width: 100%;
+        max-height: 100%;
+    }
+    &>#logo{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: calc(50vmin);
+    }
+}
+@media screen and (max-width: 1100px){
+    .hero{
+        display: flex;
+        margin-top: 3em;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        height: auto;
+        &>#background{
+            position: static;
+        }
+        &>#logo{
+            position: static;
+            width: 100%;
+        }
     }
 }

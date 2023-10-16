@@ -4,8 +4,9 @@
 .header {
     position: fixed;
     min-height: 3.5rem;
-    // outline: 1px solid black;
+    z-index: 999;
     display: flex;
+    justify-content: center;
     padding-inline: 10px;
     background: rgba(255, 255, 255, .91);
     backdrop-filter: blur(2.5px);
@@ -162,7 +163,7 @@
         width: 100vw;
         height: 100vh;
         background: #000;
-
+        z-index: 999;
         &.inactive {
             transform: translateX(-200%);
         }
@@ -172,13 +173,14 @@
         }
 
         &>.header {
+            background: transparent;
             color: white;
             justify-content: space-between;
             padding-inline: 10px;
         }
 
         &>.navlinks {
-            margin-top: 6em;
+            margin-top: 10em;
             display: flex;
             flex-flow: column nowrap;
             text-align: center;
