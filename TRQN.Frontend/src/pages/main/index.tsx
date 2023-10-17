@@ -1,18 +1,18 @@
 import './styles.scss'
-
-import { Header, Hero, Card, Footer } from "src/components";
-import { CardProps } from 'src/components/card';
-
+import { ICardsProps } from 'src/interfaces';
+import { Hero, Card } from "src/components";
 
 
-const MainPage = ({cards}: Props) => (
+
+const MainPage = ({cards}: IProps) => (
     <>
-        <Header isAdmin={true}/>
+
         <Hero/>
         <div className="products">
             {
-                cards.map((e: CardProps, i : number) => (
+                cards.map((e: ICardsProps, i : number) => (
                     <Card
+                        key={i}
                         isBig={i%3 == 0}
                         title={e.title}
                         descr={e.descr}
@@ -22,13 +22,13 @@ const MainPage = ({cards}: Props) => (
                 ))
             }
         </div>
-        <Footer/>
     </>
 
 )
 
-interface Props{
-    cards: CardProps[]
+
+interface IProps{
+    cards: ICardsProps[]
 }
 
 

@@ -40,16 +40,16 @@ const Header = ({ isAdmin = true }: Props) => {
 						</NavLink>
 					</span>
 					<nav className="navlinks">
-						<NavLink to='/' className="navlinks-link">
+						<NavLink to='/catalog/sneakers' className="navlinks-link">
 							Sneakers
 						</NavLink>
-						<NavLink to='/' className="navlinks-link">
+						<NavLink to='/catalog/highTops' className="navlinks-link">
 							High-Tops
 						</NavLink>
-						<NavLink to='/' className="navlinks-link">
+						<NavLink to='/catalog/retro' className="navlinks-link">
 							Retro
 						</NavLink>
-						<NavLink to='/' className="navlinks-link">
+						<NavLink to='/catalog/skate' className="navlinks-link">
 							Skate
 						</NavLink>
 					</nav>
@@ -113,16 +113,16 @@ const Header = ({ isAdmin = true }: Props) => {
 					</svg>
 				</div>
 				<nav className="navlinks">
-					<NavLink to='/'onClick={() => toggleMenu(false)} className="navlinks-link">
+					<NavLink to='/catalog/sneakers'onClick={() => toggleMenu(false)} className="navlinks-link">
 						Sneakers
 					</NavLink>
-					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
+					<NavLink to='/catalog/highTops' onClick={() => toggleMenu(false)} className="navlinks-link">
 						High-Tops
 					</NavLink>
-					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
+					<NavLink to='/catalog/retro' onClick={() => toggleMenu(false)} className="navlinks-link">
 						Retro
 					</NavLink>
-					<NavLink to='/' onClick={() => toggleMenu(false)} className="navlinks-link">
+					<NavLink to='/catalog/skate' onClick={() => toggleMenu(false)} className="navlinks-link">
 						Skate
 					</NavLink>
 				</nav>

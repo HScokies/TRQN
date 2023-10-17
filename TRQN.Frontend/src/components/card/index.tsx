@@ -1,6 +1,7 @@
 import './style.scss'
+import { ICardProps } from 'src/interfaces';
 
-const Card = ({ isBig = false, title, descr, price, image }: CardProps) => {
+const Card = ({ isBig = false, title, descr, price, image }: ICardProps) => {
 
     return (
         <div className={"card" + (isBig ? " big" : "")}>
@@ -14,11 +15,3 @@ const Card = ({ isBig = false, title, descr, price, image }: CardProps) => {
     );
 }
 export default Card
-
-export interface CardProps {
-    isBig: boolean,
-    title: string,
-    descr: string,
-    price: string,
-    image: string
-}
