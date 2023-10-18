@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using TRQN.Backend.Controllers;
 using TRQN.Backend.Data;
+using TRQN.Backend.Services;
+using TRQN.Backend.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(configBuilder.GetConnectionString("default"), x => x.UseDateOnlyTimeOnly())
     );
+
+builder.Services.AddSingleton<IFilesRepos, FileRepos>();
 
 var app = builder.Build();
 

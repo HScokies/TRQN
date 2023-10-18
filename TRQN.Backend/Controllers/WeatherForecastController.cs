@@ -21,6 +21,7 @@ namespace TRQN.Backend.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.Log(LogLevel.Information, Request.Method +":"+Request.Path);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
