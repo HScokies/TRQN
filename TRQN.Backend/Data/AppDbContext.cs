@@ -18,7 +18,16 @@ namespace TRQN.Backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Size>().Property(p => p.price).HasColumnType("smallmoney");
+
+            modelBuilder.Entity<Category>().HasData(
+                new Category() { id = 1, name = "Sneakers" },
+                new Category() { id = 2, name = "High-Tops" },
+                new Category() { id = 3, name = "Retro" },
+                new Category() { id = 4, name = "Skate" }
+                );
         }
     }
 }

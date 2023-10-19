@@ -18,12 +18,6 @@ namespace TRQN.Backend.Controllers
             this.logger = logger;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("All good");
-        }
-
         [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
         [HttpGet("images/{file}")]
         public async Task<IActionResult> GetImage(string file)
@@ -32,9 +26,7 @@ namespace TRQN.Backend.Controllers
             var res = await files.GetImage(file);
             return res.Match<ActionResult>(f =>
             {
-                new FileExtensionContentTypeProvider().TryGetContentType(file, out string contentType);
-                //Response.ContentType = contentType;
-                return File(f, contentType);
+                return Ok(f);
             }, exception =>
             {
                 if (exception is FileNotFoundException)
