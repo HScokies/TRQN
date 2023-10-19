@@ -3,6 +3,7 @@ using TRQN.Backend.Exceptions;
 using TRQN.Backend.Services.Interface;
 using TRQN.Backend.Mappers;
 using LanguageExt;
+using TRQN.Backend.Controllers.Extentions;
 
 namespace TRQN.Backend.Controllers
 {
@@ -42,7 +43,8 @@ namespace TRQN.Backend.Controllers
         {
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await products.GetProductInfo(SKU);
-            return res.Match<IActionResult>(f =>
+            return res.ToResponse(r => r.ToHttpStatus());
+            /*return res.Match<IActionResult>(f =>
             {
                 return Ok(f);
             }, exception =>
@@ -53,7 +55,7 @@ namespace TRQN.Backend.Controllers
                 }
                 else
                     return StatusCode(500);
-            });
+            });*/
         }
     }
 }
