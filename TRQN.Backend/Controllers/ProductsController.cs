@@ -24,18 +24,7 @@ namespace TRQN.Backend.Controllers
         {
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await products.GetProducts(catid);
-            return res.Match<ActionResult>(f =>
-            {
-                return Ok(f);
-            }, exception =>
-            {
-                if (exception is ProductNotFoundException)
-                {
-                    return NotFound(((ProductNotFoundException)exception).ToHttpStatus());
-                }
-                else
-                    return StatusCode(500);
-            });
+            return res.ToResponse(r => r.ToHttpStatus());
         }
 
         [HttpGet("{SKU}")]
@@ -44,18 +33,7 @@ namespace TRQN.Backend.Controllers
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await products.GetProductInfo(SKU);
             return res.ToResponse(r => r.ToHttpStatus());
-            /*return res.Match<IActionResult>(f =>
-            {
-                return Ok(f);
-            }, exception =>
-            {
-                if (exception is ProductNotFoundException)
-                {
-                    return NotFound(((ProductNotFoundException)exception).ToHttpStatus());
-                }
-                else
-                    return StatusCode(500);
-            });*/
+
         }
     }
 }
