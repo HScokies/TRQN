@@ -5,7 +5,7 @@ using TRQN.Backend.Views;
 
 namespace TRQN.Backend.Controllers.Extentions
 {
-    public static class ProductsControllerExtension
+    public static class ControllersExtension
     {
         public static IActionResult ToResponse<TResult>(this Result<TResult> res, Func<ACustomException, StatusCodeMessage> errorMapper)
         {
@@ -16,7 +16,13 @@ namespace TRQN.Backend.Controllers.Extentions
             {
                 if (exception is ProductNotFoundException)
                 {
-                    return new NotFoundObjectResult(errorMapper((ProductNotFoundException)exception));
+                    var ex = (ProductNotFoundException)exception;
+                    return new ObjectResult(errorMapper(ex)) { StatusCode = ex.code };
+                }
+                if (exception is UserException)
+                {
+                    var ex = (UserException)exception;
+                    return new ObjectResult(errorMapper(ex)) { StatusCode = ex.code };
                 }
                 else
                     return new StatusCodeResult(500);

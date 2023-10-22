@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TRQN.Backend.Data;
 using TRQN.Backend.Services;
+using TRQN.Backend.Services.Encryption;
 using TRQN.Backend.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ var configBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json", f
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlServer(configBuilder.GetConnectionString("default"), x => x.UseDateOnlyTimeOnly())
     );
+
+builder.Services.AddSingleton<IBlowfishEncryption, BlowfishEncryption>(options => new BlowfishEncryption(configBuilder.GetSection("EncryptionKey").Value!));
+builder.Services.AddScoped<IUserRepos, UserRepos>();
 builder.Services.AddScoped<IProductsRepos, ProductsRepos>();
 builder.Services.AddScoped<IFilesRepos, FileRepos>();
 
