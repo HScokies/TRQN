@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TRQN.Backend.Data;
 
@@ -11,9 +12,11 @@ using TRQN.Backend.Data;
 namespace TRQN.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231024160057_Cart")]
+    partial class Cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,29 +85,6 @@ namespace TRQN.Backend.Migrations
                             id = 4,
                             name = "Skate"
                         });
-                });
-
-            modelBuilder.Entity("TRQN.Backend.Models.Country", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("shipping")
-                        .HasColumnType("smallmoney");
-
-                    b.Property<decimal>("tax")
-                        .HasColumnType("decimal(3,2)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("countries");
                 });
 
             modelBuilder.Entity("TRQN.Backend.Models.Product", b =>

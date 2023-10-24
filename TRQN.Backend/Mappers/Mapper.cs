@@ -43,5 +43,47 @@ namespace TRQN.Backend.Mappers
                 message = exception.message
             };
         }
+        
+        public static CartView ToCartView(this List<Cart> cartContents)
+        {
+            var cartItems = new List<CartItem>();
+            foreach (var Item in cartContents)
+            {
+                cartItems.Add(new CartItem()
+                {
+                    id = Item.id,
+                    title = Item.size.product.name,
+                    size = Item.size.size,
+                    colorWay = Item.size.product.colorway,
+                    image = Item.size.product.image,
+                    price = Item.size.price
+                });
+            }
+            return new CartView()
+            {
+                items = cartItems,
+                subtotal = cartItems.Sum(i => i.price)
+            };
+        }
+
+        public static CountryView ToCountryView(this Country country)
+        {
+            return new CountryView()
+            {
+                shipping = country.shipping,
+                tax = country.tax
+            };
+        }
+        public static IEnumerable<CountryPreview> ToCountryPreview(this List<Country> countries)
+        {
+            foreach (var country in countries)
+            {
+                yield return new CountryPreview()
+                {
+                    id = country.id,
+                    name = country.name
+                };
+            }
+        }
     }
 }

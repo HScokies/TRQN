@@ -30,6 +30,15 @@ namespace TRQN.Backend.Models
         #endregion
     }
 
+    public record Cart
+    {
+        public int id { get; set; }
+        public int userId { get; set; }
+        public User user { get; set; } = null!;
+        public int sizeId { get; set; } // bc size links to product
+        public Size size { get; set; } = null!;
+    }
+
     public enum Roles
     {
         user,

@@ -14,9 +14,9 @@ namespace TRQN.Backend.Controllers.Extentions
                 return new OkObjectResult(f);
             }, exception =>
             {
-                if (exception is ProductNotFoundException)
+                if (exception is ProductException)
                 {
-                    var ex = (ProductNotFoundException)exception;
+                    var ex = (ProductException)exception;
                     return new ObjectResult(errorMapper(ex)) { StatusCode = ex.code };
                 }
                 if (exception is UserException)

@@ -19,6 +19,15 @@ namespace TRQN.Backend.Controllers
             this.products = products;
             this.logger = logger;
         }
+        
+        [HttpGet("random={count:int}")]
+        public async Task<IActionResult> GetRandomProducts(int count)
+        {
+            logger.LogInformation($"{Request.Method}: {Request.Path}");
+            var res = await products.GetRandomProducts(count);
+            return Ok(res);
+        }
+
         [HttpGet("category={catid:Int}")]
         public async Task<IActionResult> GetCategoryProducts(int catid)
         {
@@ -34,6 +43,14 @@ namespace TRQN.Backend.Controllers
             var res = await products.GetProductInfo(SKU);
             return res.ToResponse(r => r.ToHttpStatus());
 
+        }
+
+        [HttpGet("search/{productName}")]
+        public async Task<IActionResult> Search(string productName)
+        {
+            logger.LogInformation($"{Request.Method}: {Request.Path}");
+            var res = await products.GetProducts(productName);
+            return Ok(res);
         }
     }
 }

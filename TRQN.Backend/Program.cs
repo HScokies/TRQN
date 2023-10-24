@@ -21,6 +21,7 @@ builder.Services.AddSingleton<IBlowfishEncryption, BlowfishEncryption>(options =
 builder.Services.AddScoped<IUserRepos, UserRepos>();
 builder.Services.AddScoped<IProductsRepos, ProductsRepos>();
 builder.Services.AddScoped<IFilesRepos, FileRepos>();
+builder.Services.AddScoped<ICountriesRepos, CountriesRepos>();
 
 var app = builder.Build();
 

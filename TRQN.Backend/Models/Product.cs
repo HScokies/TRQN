@@ -23,7 +23,7 @@ namespace TRQN.Backend.Models
         public int id { get; set; }
         [NotNull]
         public string productId { get; set; } = null!;
-        private Product product { get; set; } = null!;
+        public Product product { get; set; } = null!;
         public double size { get; set; }
         [DataType(DataType.Currency)]
         public decimal price { get; set; }
