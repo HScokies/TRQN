@@ -19,7 +19,7 @@ namespace TRQN.Backend.Services
 
         public async Task<Result<ProductInfo>> GetProductInfo(string SKU)
         {
-            var res = await ctx.products.Include(p => p.sizes).FirstOrDefaultAsync(p => p.SKU == SKU);
+            var res = await ctx.products.Include(p => p.sizes.OrderBy(s => s.size)).FirstOrDefaultAsync(p => p.SKU == SKU);
             if (res is null)
             {
                 var ProductNotFound = new ProductException();
