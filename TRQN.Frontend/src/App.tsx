@@ -1,19 +1,30 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MainPage, CatalogPage } from 'pages/exports'
+import { MainPage, CatalogPage, ProductPage, AdminPage, CartPage } from 'pages/exports'
 import { Header, Footer } from "src/components";
+import { AuthContext } from "./AuthContext";
+import PrivateRoutes from "./PrivateRoutes";
+
 import Placeholder from 'src/assets/prod_placeholder.json'
+import { useContext } from "react";
 
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <Header isAdmin={true} />
-            <Routes>
-                <Route path="/" element={<MainPage cards={[Placeholder, Placeholder, Placeholder]} />} />
-                <Route path="/catalog/:category" element={<CatalogPage />} />
-            </Routes>
-            <Footer />
-        </BrowserRouter>
+        <AuthContext.Provider value={true}>
+            <BrowserRouter>
+                <Header />
+                <Routes>
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="/dashboard" element={<AdminPage />} />
+                        <Route path="/cart" element={<CartPage/>} />
+                    </Route>
+                    <Route path="/" element={<MainPage cards={[Placeholder, Placeholder, Placeholder]} />} />
+                    <Route path="/catalog/:category" element={<CatalogPage />} />
+                    <Route path="/product/:SKU" element={<ProductPage />} />
+                </Routes>
+                <Footer />
+            </BrowserRouter>
+        </AuthContext.Provider>
     )
 }
 

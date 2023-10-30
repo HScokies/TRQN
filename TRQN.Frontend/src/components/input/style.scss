@@ -1,0 +1,33 @@
+@import 'styles/variables.scss';
+
+.input{
+    margin-top: 10em;
+    display: flex;
+    flex-flow: column nowrap;
+    min-width: 320px;
+    &_info{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        font-size: 1em;
+        &-title{
+            color: $gray_text2;
+        }
+        &-error{
+            visibility: visible;
+            color: #E91C23;
+        }
+    }
+}
+.input > input{
+    border: 1px solid $gray_text2;
+    border-radius: 5px;
+}
+
+.input.error > input{
+    border: 1px solid #E91C23;
+}
+
+.input:not(.error) .input_info-error{
+    visibility: hidden;
+}

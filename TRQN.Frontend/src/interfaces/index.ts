@@ -1,4 +1,5 @@
 export interface ICardProps{
+    SKU: string,
     title: string,
     descr: string, //short descr
     price: number, //starting price
