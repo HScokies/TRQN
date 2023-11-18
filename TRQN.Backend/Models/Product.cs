@@ -9,7 +9,6 @@ namespace TRQN.Backend.Models
         public string SKU { get; set; } = null!;
         public Category category { get; set; } = null!;
         public string name { get; set; } = null!;
-        public string descriptionShort { get; set; } = null!;
         public string description { get; set; } = null!;
         public string image { get; set; } = null!; // Filename
         public string colorway { get; set; } = null!;

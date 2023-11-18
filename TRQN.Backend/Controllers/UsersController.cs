@@ -22,7 +22,7 @@ namespace TRQN.Backend.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateUser(UserView userData)
+        public async Task<IActionResult> CreateUser([FromForm]UserView userData)
         {
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await users.CreateUser(userData.email, userData.password);
@@ -44,7 +44,7 @@ namespace TRQN.Backend.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserView userData)
+        public async Task<IActionResult> Login([FromForm]UserView userData)
         {
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await users.Authorize(userData.email, userData.password);

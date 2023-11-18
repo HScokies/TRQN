@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Validations\" />
+    <Compile Remove="Validations\**" />
+    <Content Remove="Validations\**" />
+    <EmbeddedResource Remove="Validations\**" />
+    <None Remove="Validations\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +23,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

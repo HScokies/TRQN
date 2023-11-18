@@ -28,7 +28,6 @@ namespace TRQN.Backend.Mappers
                 {
                     SKU = product.SKU,
                     name = product.name,
-                    descriptionShort = product.descriptionShort,
                     image = product.image,
                     price = product.sizes.Min(p => p.price)
                 };

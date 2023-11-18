@@ -12,8 +12,8 @@ using TRQN.Backend.Data;
 namespace TRQN.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231018144714_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231118045144_MigInit")]
+    partial class MigInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,29 @@ namespace TRQN.Backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TRQN.Backend.Models.Cart", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("sizeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("sizeId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("cart");
+                });
 
             modelBuilder.Entity("TRQN.Backend.Models.Category", b =>
                 {
@@ -40,6 +63,51 @@ namespace TRQN.Backend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            name = "Sneakers"
+                        },
+                        new
+                        {
+                            id = 2,
+                            name = "High-Tops"
+                        },
+                        new
+                        {
+                            id = 3,
+                            name = "Retro"
+                        },
+                        new
+                        {
+                            id = 4,
+                            name = "Skate"
+                        });
+                });
+
+            modelBuilder.Entity("TRQN.Backend.Models.Country", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("shipping")
+                        .HasColumnType("smallmoney");
+
+                    b.Property<decimal>("tax")
+                        .HasColumnType("decimal(3,2)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("countries");
                 });
 
             modelBuilder.Entity("TRQN.Backend.Models.Product", b =>
@@ -132,6 +200,25 @@ namespace TRQN.Backend.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("TRQN.Backend.Models.Cart", b =>
+                {
+                    b.HasOne("TRQN.Backend.Models.Size", "size")
+                        .WithMany()
+                        .HasForeignKey("sizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TRQN.Backend.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("size");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("TRQN.Backend.Models.Product", b =>
                 {
                     b.HasOne("TRQN.Backend.Models.Category", "category")
@@ -145,11 +232,13 @@ namespace TRQN.Backend.Migrations
 
             modelBuilder.Entity("TRQN.Backend.Models.Size", b =>
                 {
-                    b.HasOne("TRQN.Backend.Models.Product", null)
+                    b.HasOne("TRQN.Backend.Models.Product", "product")
                         .WithMany("sizes")
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("TRQN.Backend.Models.Product", b =>
