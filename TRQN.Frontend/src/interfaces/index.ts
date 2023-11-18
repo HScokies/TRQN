@@ -1,5 +1,5 @@
 export interface ICardProps{
-    SKU: string,
+    sku: string,
     name: string,
     descriptionShort: string, //short descr
     price: number, //starting price
@@ -7,6 +7,7 @@ export interface ICardProps{
     isBig: boolean //card size
 }
 export interface ICardsProps{
+    sku: string
     name: string,
     descriptionShort: string, //short descr
     price: number, //starting price
@@ -14,12 +15,16 @@ export interface ICardsProps{
 }
 
 export interface IProductProps{
-    title: string,
-    descr: string,
+    name: string,
+    sku: string,
+    colorway: string,
+    releaseDate: string,
+    description: string,
     image: string,
     sizes: ISizeToPrice[]
 }
-interface ISizeToPrice{
+export interface ISizeToPrice{
+    id: number,
     size: number,
-    price: number | null
+    price: number
 }

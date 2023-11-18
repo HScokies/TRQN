@@ -10,13 +10,12 @@ import { AxiosError, AxiosResponse } from "axios";
 
 
 const App = () => {
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(null)
     const [randomProducts, setRandomProducts] = useState([])
     useEffect(() => {
         const checkIfAdmin = () => {
             api.get("/users/displayDashboard")
                 .then((res: AxiosResponse) => {
-                    console.log("res:", res)
                 })
                 .catch((e: AxiosError) => {
                    
@@ -25,7 +24,6 @@ const App = () => {
         const getRandomProducts = () => {
             api.get("/products/random=3")
             .then((res) => {
-                console.log(res.data)
                 setRandomProducts(res.data)
             })
             .catch((e) => {

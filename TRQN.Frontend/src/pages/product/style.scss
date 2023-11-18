@@ -4,6 +4,8 @@
     display: flex;
     justify-content: center;
     margin: 5em 2em;
+    padding: 5em;
+    background: white;
 }
 
 .about-title {
@@ -74,6 +76,9 @@ select {
     img {
         max-width: 100%;
         height: auto;
+        min-height: 350px;
+        margin-right: 1em;
+        max-height: 25em;
     }
 }
 
@@ -109,6 +114,11 @@ select {
 
 /* Mobile */
 @media screen and (max-width: 1504px) {
+    .product-image > img{
+        margin: 0;
+        min-height: initial;
+    }
+
     .product-details {
         &>H1 {
             margin-top: 2em;
@@ -118,7 +128,7 @@ select {
 
     .app-container {
         flex-direction: column;
-        margin: 2em 0;
+        margin: 4em 0;
         padding-inline: .3em;
     }
 

@@ -2,14 +2,17 @@ import React from 'react';
 import './index.scss';
 
 interface ISizeButton {
-  size: string;
+  id: number,
+  size: number;
   price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>;
+  setPrice: React.Dispatch<React.SetStateAction<number>>,
+  setSize: React.Dispatch<React.SetStateAction<number>>, 
 }
 
-const SizeButton = ({ size, price, setPrice }: ISizeButton) => {
+const SizeButton = ({ id, size, price, setPrice, setSize }: ISizeButton) => {
   const handleClick = () => {
     setPrice(price);
+    setSize(id)
   };
 
   return (

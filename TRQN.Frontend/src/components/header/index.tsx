@@ -1,9 +1,11 @@
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import './style.scss'
 import { useContext, useState } from "react";
 import { AuthContext } from "src/AuthContext";
 
 const Header = () => {
+	const navigate = useNavigate()
+
 	const [isCollapsed, setIsCollapsed] = useState(true);
 	const [Search, setSearch] = useState("");
 	const [menuOpened, setMenuOpened] = useState(false);
@@ -26,8 +28,7 @@ const Header = () => {
 
 	const OnSearchSubmit = (e : KeyboardEvent) => {
 		if(e.key === 'Enter') {
-			alert(isCart)
-			alert(Search)    
+			navigate(`/catalog/${Search}`)    
 		}
 	}
 

@@ -3,10 +3,8 @@ import { ICardsProps } from 'src/interfaces';
 import { Hero, Card } from "src/components";
 
 
-
 const MainPage = ({cards}: IProps) => (
     <>
-
         <Hero/>
         <div className="products">
             {
