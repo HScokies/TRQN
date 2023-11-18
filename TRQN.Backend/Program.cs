@@ -23,11 +23,20 @@ builder.Services.AddScoped<IProductsRepos, ProductsRepos>();
 builder.Services.AddScoped<IFilesRepos, FileRepos>();
 builder.Services.AddScoped<ICountriesRepos, CountriesRepos>();
 
+var CorsPolicy = "corsPolicy";
+
+builder.Services.AddCors(
+    p => p.AddPolicy(name: CorsPolicy,
+    build => {
+        build.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        })
+);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseCors(CorsPolicy);
 
 app.UseAuthorization();
 

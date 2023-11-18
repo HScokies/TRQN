@@ -3,15 +3,41 @@ import { MainPage, CatalogPage, ProductPage, AdminPage, CartPage, AuthPage } fro
 import { Header, Footer } from "src/components";
 import { AuthContext } from "./AuthContext";
 import { PrivateRoutes, AuthRoute } from "./PrivateRoutes";
-
-import Placeholder from 'src/assets/prod_placeholder.json'
-import { useContext } from "react";
+import api from "./api/axiosConfig";
+import { useContext, useState, useEffect } from "react";
+import { AxiosError, AxiosResponse } from "axios";
 
 
 
 const App = () => {
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [randomProducts, setRandomProducts] = useState([])
+    useEffect(() => {
+        const checkIfAdmin = () => {
+            api.get("/users/displayDashboard")
+                .then((res: AxiosResponse) => {
+                    console.log("res:", res)
+                })
+                .catch((e: AxiosError) => {
+                   
+                })
+        }
+        const getRandomProducts = () => {
+            api.get("/products/random=3")
+            .then((res) => {
+                console.log(res.data)
+                setRandomProducts(res.data)
+            })
+            .catch((e) => {
+                console.error(e)
+            })
+        }
+        getRandomProducts(); 
+        checkIfAdmin()
+    }, [])
+
     return (
-        <AuthContext.Provider value={true}>
+        <AuthContext.Provider value={isAdmin}>
             <BrowserRouter>
                 <Header />
                 <Routes>
@@ -23,7 +49,7 @@ const App = () => {
                         <Route path="/auth" element={<AuthPage />} />
                     </Route>
 
-                    <Route path="/" element={<MainPage cards={[Placeholder, Placeholder, Placeholder]} />} />
+                    <Route path="/" element={<MainPage cards={randomProducts} />} />
                     <Route path="/catalog/:category" element={<CatalogPage />} />
                     <Route path="/product/:SKU" element={<ProductPage />} />
                 </Routes>

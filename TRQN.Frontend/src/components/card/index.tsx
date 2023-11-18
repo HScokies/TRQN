@@ -2,17 +2,17 @@ import './style.scss'
 
 import { Link } from "react-router-dom";
 import { ICardProps } from 'src/interfaces';
+import { BASE_URL } from 'src/api/axiosConfig';
 
-const Card = ({ SKU, isBig = false, title, descr, price, image }: ICardProps) => {
-
+const Card = ({ SKU, isBig = false, name, descriptionShort, price, image }: ICardProps) => {
     return (
         <Link to={`/product/${SKU}`} className={"card" + (isBig ? " big" : "")}>
             <div className="card-info">
-                <span className="card-info_title">{title}</span>
-                <span className="card-info_descr">{descr}</span>
+                <span className="card-info_title">{name}</span>
+                <span className="card-info_descr">{descriptionShort}</span>
                 <span className="card-info_price">{`$${price}+`}</span>
             </div>
-            <img src={image} alt={image} className="card-info_image" draggable="false" />
+            <img src={BASE_URL+"/files/images/"+image} alt={image} className="card-info_image" draggable="false" />
         </Link>
 
     );

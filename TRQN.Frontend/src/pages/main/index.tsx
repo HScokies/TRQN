@@ -13,9 +13,10 @@ const MainPage = ({cards}: IProps) => (
                 cards.map((e: ICardsProps, i : number) => (
                     <Card
                         key={i}
+                        sku={e.sku}
                         isBig={i%3 == 0}
-                        title={e.title}
-                        descr={e.descr}
+                        name={e.name}
+                        descriptionShort={e.descriptionShort}
                         price={e.price}
                         image={e.image}
                     />
