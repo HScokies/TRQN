@@ -3,7 +3,7 @@ import { useState } from 'react';
 import productData from './placeholder.json';
 import { SizeButton } from 'src/components';
 
-const ProductPage = (SKU: string) => {
+const ProductPage = () => {
     const [selectedSize, setSelectedSize] = useState('');
     const [price, setPrice] = useState(0);
 
