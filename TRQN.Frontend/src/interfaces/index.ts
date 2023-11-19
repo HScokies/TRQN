@@ -28,3 +28,8 @@ export interface ISizeToPrice{
     size: number,
     price: number
 }
+
+export interface IResponse{
+    code: number,
+    message: string
+}

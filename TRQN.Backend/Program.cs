@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TRQN.Backend.Data;
@@ -23,12 +24,14 @@ builder.Services.AddScoped<IProductsRepos, ProductsRepos>();
 builder.Services.AddScoped<IFilesRepos, FileRepos>();
 builder.Services.AddScoped<ICountriesRepos, CountriesRepos>();
 
-var CorsPolicy = "corsPolicy";
 
+
+
+var CorsPolicy = "corsPolicy";
 builder.Services.AddCors(
     p => p.AddPolicy(name: CorsPolicy,
     build => {
-        build.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        build.AllowCredentials().AllowAnyHeader().AllowAnyMethod().WithOrigins("http://127.0.0.1:5173");
         })
 );
 

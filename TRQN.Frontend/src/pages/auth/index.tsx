@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './style.scss'
+import { AxiosError, AxiosResponse } from 'axios';
+import api from 'src/api/axiosConfig';
+import { IResponse } from 'src/interfaces';
+import { AuthContext } from 'src/AuthContext';
 
 
 const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true)
-    const handleInput = (e) => {
-        const element = e.target;
-        if (element.value.trim().length < 1) {
-            element.classList.add("invalid")
-        }
-        else {
-            element.classList.remove("invalid")
-        }
+    const { setIsAdmin } = useContext(AuthContext)
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const data = new FormData(e.target as HTMLFormElement)
+        isLogin ? PostData("users/login", data) : PostData("users/create", data);
+    }
+
+    const PostData = (url: string, data: FormData) => {
+        api.post(url, data, { withCredentials: true }).then((res) => { console.debug(url, res.status); CheckIfAdmin()}).catch((e: AxiosError) => alert((e.response?.data as IResponse).message))
+    }
+
+    const CheckIfAdmin = () => {
+        api.get("/users/displayDashboard", {withCredentials: true})
+        .then((res) => {
+            setIsAdmin(res.data)
+        })
     }
 
     return (
-        <form className="auth_form">
+        <form className="auth_form" onSubmit={(e) => handleSubmit(e)}>
             <div className="auth_form-switch">
                 <a className={"auth_form-switch_login " + (isLogin ? "active" : "")} onClick={() => setIsLogin(true)}>Sign in</a>
                 <a className={"auth_form-switch_signup " + (!isLogin ? "active" : "")} onClick={() => setIsLogin(false)}>Sign up</a>
@@ -23,14 +36,14 @@ const AuthPage = () => {
             <div className="auth_form-container">
                 <div className="auth_form-container_input">
                     Email
-                    <input type="email" required onBlur={(e) => handleInput(e)} />
+                    <input type="email" name='email' required />
                 </div>
                 <div className="auth_form-container_input">
                     Password
-                    <input type="password" required onBlur={(e) => handleInput(e)} />
+                    <input type="password" name='password' required />
                 </div>
             </div>
-            <input type="submit" className="auth_form-submit" value={isLogin? "Sign in" : "Sign up"} />
+            <input type="submit" className="auth_form-submit" value={isLogin ? "Sign in" : "Sign up"} />
         </form>
     );
 }

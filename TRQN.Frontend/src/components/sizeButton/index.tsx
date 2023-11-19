@@ -5,14 +5,17 @@ interface ISizeButton {
   id: number,
   size: number;
   price: number;
-  setPrice: React.Dispatch<React.SetStateAction<number>>,
-  setSize: React.Dispatch<React.SetStateAction<number>>, 
+  setSizeData: ({id, price} : ISizeData) => void
 }
 
-const SizeButton = ({ id, size, price, setPrice, setSize }: ISizeButton) => {
+interface ISizeData{
+  id: number,
+  price: number
+}
+
+const SizeButton = ({ id, size, price, setSizeData }: ISizeButton) => {
   const handleClick = () => {
-    setPrice(price);
-    setSize(id)
+    setSizeData({id: id, price: price})
   };
 
   return (

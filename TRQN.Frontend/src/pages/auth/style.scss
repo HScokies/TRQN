@@ -36,6 +36,9 @@
                 &:focus{
                     outline: 1px solid #8181815F;
                 }
+                &:invalid{
+                    outline-color: #E91C23;
+                }
             }
         }
     }

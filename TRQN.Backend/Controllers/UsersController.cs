@@ -27,19 +27,13 @@ namespace TRQN.Backend.Controllers
             logger.LogInformation($"{Request.Method}: {Request.Path}");
             var res = await users.CreateUser(userData.email, userData.password);
             return res.Match<IActionResult>(f =>
-            {
-                var CookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,
-                    Expires = DateTime.UtcNow.AddHours(5),
-                    Secure = true
-                };
-                Response.Cookies.Append("token", f.ToString(), new CookieOptions() { HttpOnly = true, Secure = true });
+            {   
+                Response.Cookies.Append("token", f.ToString(), new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax });
                 return Ok();
             }, exception =>
             {
                 var ex = (UserException)exception;
-                return StatusCode(ex.code, ex.message);
+                return StatusCode(ex.code, ex.ToHttpStatus());
             });
         }
 
@@ -50,7 +44,7 @@ namespace TRQN.Backend.Controllers
             var res = await users.Authorize(userData.email, userData.password);
             res.IfSucc(f =>
             {
-                Response.Cookies.Append("token", f, new CookieOptions() { HttpOnly = true, Secure = true });
+                Response.Cookies.Append("token", f, new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax });
             });
             return res.ToResponse(r => r.ToHttpStatus());
         }
