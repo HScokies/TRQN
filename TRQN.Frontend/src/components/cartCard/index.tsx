@@ -1,15 +1,20 @@
 
 import './style.scss';
 import { useEffect, useState } from 'react';
-import data from './data.json'
+import api, { BASE_URL } from 'src/api/axiosConfig';
+
+export interface ICountryData {
+    tax: number,
+    shipping: number
+}
 
 interface Product {
-    id: number;
-    title: string;
-    size: number;
-    colorWay: string;
-    image: string;
-    price: number;
+    id: number,
+    title: string,
+    size: number,
+    colorWay: string,
+    image: string,
+    price: number
 }
 
 interface CartData {
@@ -17,52 +22,68 @@ interface CartData {
     items: Product[];
 }
 
-interface CountryData{
-    tax: number,
-    shipping : number
+interface Props {
+    id: number
 }
 
-interface Props{
-    country : string
-}
 
-const cartCard = ({country} : Props) => {
-    const [items, setItems] = useState<Product[]>([])
-    const [subtotal, setSubtotal] = useState(0)
-    const [countryData, setCountryData] = useState<CountryData>()
+
+const cartCard = ({ id }: Props) => {
+    const [data, setData] = useState<CartData>()
+    const [countryData, setCountryData] = useState<ICountryData>({ tax: 0, shipping: 0 })
     const [total, setTotal] = useState(0)
 
+    const getCartData = () => {
+        api.get("/users/cart")
+            .then((res) => {
+                setData(res.data)
+                setTotal(res.data.subtotal)
+            })
+    }
     useEffect(() => {
-        const Calculate = (cData : CountryData) => {
-            setTotal(data.subtotal * cData.tax)
-            let tax = data.subtotal * (cData.tax-1);
-            setCountryData({tax: tax, shipping: cData.shipping})
-        }       
-        setItems(data.items)
-        setSubtotal(data.subtotal)
-        Calculate(JSON.parse(country))
-    }, [country])
-    return (
-        <>
-            <div className='product_container'>
-                {items.map((item) => (
-                    <div key={item.id} className="basket-card">
-                        <div>
-                            <img className='basket_img' src={item.image} alt={item.title} />
-                        </div>
-                        <div>
-                            <h3>{item.title}</h3>
-                            <p>US Size {item.size}</p>
-                            <p>{item.colorWay}</p>
-                        </div>
-                        <div className='basket_price'>${item.price.toFixed(2)}</div>
+        getCartData()
+    }, [])
+
+    useEffect(() => {
+        const getData = () => {
+            api.get(`/countries/${id}`)
+                .then((res) => {
+                    const cData: ICountryData = res.data;
+                    console.log(cData, data)
+                    if (!data) return
+                    setTotal(data?.subtotal * cData.tax + cData.shipping)
+                    setCountryData({ tax: data?.subtotal * (cData.tax - 1), shipping: cData.shipping })
+                })
+        }
+        if (id != -1) getData()
+    }, [id, data])
+
+    const removeItem = (id: number) => {
+        api.delete(`/users/cart/${id}`)
+            .then(() => {
+                getCartData()
+            })
+    }
+
+    const OutputItems = () => (
+        <>{
+            data?.items.map((item) => (
+                <div key={item.id} className="basket-card">
+                    <div>
+                        <img className='basket_img' src={BASE_URL + "/files/images/" + item.image} alt={item.title} />
                     </div>
-                ))}
-            </div>
+                    <div>
+                        <h3>{item.title}</h3>
+                        <p>US Size {item.size}</p>
+                        <p>{item.colorWay}</p>
+                    </div>
+                    <div className='basket_price'><span className='delete' onClick={() => removeItem(item.id)}>X</span><span>${item.price.toFixed(2)}</span></div>
+                </div>
+            ))}
             <div className="orderPrice-container">
                 <div className='orderPrice'>
                     <h2>Subtotal</h2>
-                    ${subtotal.toFixed(2)}
+                    ${data?.subtotal.toFixed(2)}
                 </div>
                 <div className='orderPrice'>
                     <h2>Shipping</h2>
@@ -74,9 +95,20 @@ const cartCard = ({country} : Props) => {
                 </div>
             </div>
             <div className='orderPrice total'>
-                    <h2>Order total</h2>
-                    <span>${total.toFixed(2)}</span>
+                <h2>Order total</h2>
+                <span>${total.toFixed(2)}</span>
             </div>
+            <button className='buy_button'>Place Order</button>
+        </>
+    )
+
+
+    return (
+        <>
+            <div className='product_container'>
+                {data != undefined && data.items.length > 0 ? OutputItems() : "Your cart is empty! for now."}
+            </div>
+
         </>
     );
 };

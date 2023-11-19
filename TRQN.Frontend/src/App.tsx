@@ -28,7 +28,7 @@ const App = () => {
                     setRandomProducts(res.data)
                 })
                 .catch((e) => {
-                    console.error(e)
+
                 })
         }
         getRandomProducts();

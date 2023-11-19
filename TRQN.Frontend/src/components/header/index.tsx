@@ -25,7 +25,7 @@ const Header = () => {
 	}
 
 	const {isAdmin} = useContext(AuthContext)
-	console.log(isAdmin)
+
 
 	const OnSearchSubmit = (e : KeyboardEvent) => {
 		if(e.key === 'Enter') {

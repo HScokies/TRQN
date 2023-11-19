@@ -17,13 +17,15 @@ const AuthPage = () => {
     }
 
     const PostData = (url: string, data: FormData) => {
-        api.post(url, data, { withCredentials: true }).then((res) => { console.debug(url, res.status); CheckIfAdmin()}).catch((e: AxiosError) => alert((e.response?.data as IResponse).message))
+        api.post(url, data).then((res) => { console.debug(url, res.status); CheckIfAdmin()}).catch((e: AxiosError) => alert((e.response?.data as IResponse).message))
     }
 
     const CheckIfAdmin = () => {
-        api.get("/users/displayDashboard", {withCredentials: true})
+        api.get("/users/displayDashboard")
         .then((res) => {
             setIsAdmin(res.data)
+        })
+        .catch((e: AxiosError) => {
         })
     }
 

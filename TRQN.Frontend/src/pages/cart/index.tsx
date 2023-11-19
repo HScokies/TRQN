@@ -1,15 +1,32 @@
 import './style.scss';
 import Input from 'src/components/input';
 import CartCard from 'src/components/cartCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import api from 'src/api/axiosConfig';
+
+interface ICountries{
+  id: number,
+  name: string
+}
+
 
 const Cart = () => {
-  const [countryData, setCountryData] = useState<string>(`
-  {
-    "tax": 1.35,
-    "shipping": 2500.0000
-  }
-  `)
+  const [activeCountry, setActiveCountry] = useState<number>(-1)
+
+  const [countries, setCountries] = useState<ICountries[]>()
+
+  useEffect(() => {
+    api.get("/countries")
+    .then((res) => {
+      setCountries(res.data)
+      setActiveCountry((res.data[0] as ICountries).id)
+    })
+    .catch((e) => {
+
+    })
+  }, [])
+
+
 
   return (
     <div className='basket_container'>
@@ -25,28 +42,20 @@ const Cart = () => {
           <label className='label'>
             * Country or Region
           </label>
-          <select onChange={(e) => setCountryData(e.target.value)}>
-            <option value={`
-              {
-                "tax": 1.35,
-                "shipping": 2500.0000
-              }
-              `}>Russia</option>
-            <option value={`
-              {
-                "tax": 2,
-                "shipping": 500.0000
-              }
-              `}>United States</option>
+          <select onChange={(e) => setActiveCountry(+e.target.value)}>
+            {
+              countries?.map((e) => (
+                <option value={e.id} key={e.id}>{e.name}</option>
+              ))
+            }
           </select>
         </div>
         <Input type='telephone' label='Telephone' pattern='^\+[1-9]{1}[0-9]{3,14}$' />
         <label className='label'>* Required</label>
       </div>
       <div className='right'>
-        <h1 className='title'>order summary</h1>
-        <CartCard country={countryData} />
-        <button className='buy_button'>Place Order</button>
+        <h1 className='title summary'>order summary</h1>
+        <CartCard id={activeCountry} />
       </div>
     </div>
   );
