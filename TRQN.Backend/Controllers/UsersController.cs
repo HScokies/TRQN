@@ -28,7 +28,7 @@ namespace TRQN.Backend.Controllers
             var res = await users.CreateUser(userData.email, userData.password);
             return res.Match<IActionResult>(f =>
             {   
-                Response.Cookies.Append("token", f.ToString(), new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax });
+                Response.Cookies.Append("token", f.ToString(), new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None });
                 return Ok();
             }, exception =>
             {
@@ -44,7 +44,7 @@ namespace TRQN.Backend.Controllers
             var res = await users.Authorize(userData.email, userData.password);
             res.IfSucc(f =>
             {
-                Response.Cookies.Append("token", f, new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax });
+                Response.Cookies.Append("token", f, new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None });
             });
             return res.ToResponse(r => r.ToHttpStatus());
         }
