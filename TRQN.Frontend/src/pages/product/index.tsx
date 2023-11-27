@@ -59,12 +59,14 @@ const ProductPage = () => {
                 </select>
                 <button className="buy-button" onClick={() => addToCart()}>${sizeData.price}</button>
                 <span className='line'></span>
-                <span className='about-title'>About this product</span>
-                <p>{productData?.description}</p>
-                <div className='about-container'>
-                    <span className='about-info'>SKU: {productData?.sku}</span>
-                    <span className='about-info'>Colorway: {productData?.colorway}</span>
-                    <span className='about-info'>Release Date: {productData?.releaseDate}</span>
+                <div className='about-scroll'>
+                    <span className='about-title'>About this product</span>
+                    <p>{productData?.description}</p>
+                    <div className='about-container'>
+                        <span className='about-info'>SKU: {productData?.sku}</span>
+                        <span className='about-info'>Colorway: {productData?.colorway}</span>
+                        <span className='about-info'>Release Date: {productData?.releaseDate}</span>
+                    </div>
                 </div>
             </div>
         </div>
