@@ -122,6 +122,17 @@ select {
     background: $gray_text2;
 }
 
+.about-scroll{
+    max-height: 20vh;
+    overflow-y: auto;
+    scrollbar-color: $gray_text2 transparent;
+    scrollbar-width: thin;
+    @media (max-width: 1440px) {
+        overflow-y: visible;
+        max-height: none;
+    }
+}
+
 /* Mobile */
 @media screen and (max-width: 1440px) {
     .product-image > img{
