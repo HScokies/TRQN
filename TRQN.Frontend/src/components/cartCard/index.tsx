@@ -2,6 +2,7 @@
 import './style.scss';
 import { useEffect, useState } from 'react';
 import api, { BASE_URL } from 'src/api/axiosConfig';
+import { submitUserData } from 'src/pages/cart';
 
 export interface ICountryData {
     tax: number,
@@ -65,6 +66,11 @@ const cartCard = ({ id }: Props) => {
             })
     }
 
+    const handleSubmit = () => {
+        if (confirm("Save shipping address?"))
+            submitUserData()
+    }
+
     const OutputItems = () => (
         <>{
             data?.items.map((item) => (
@@ -98,7 +104,7 @@ const cartCard = ({ id }: Props) => {
                 <h2>Order total</h2>
                 <span>${total.toFixed(2)}</span>
             </div>
-            <button className='buy_button'>Place Order</button>
+            <button onClick={() => handleSubmit()} className='buy_button'>Place Order</button>
         </>
     )
 

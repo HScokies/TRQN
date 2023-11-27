@@ -1,10 +1,27 @@
+@import 'styles/variables.scss';
 
 .profile-page{
-    margin: 5em 2em 0;
+    margin: 5em 2em;
     background-color: white;
     padding: 1em;
     & select{
         margin-bottom: 0;
+    }
+    &-button{
+        margin-top: 1em;
+        display: block;
+        text-transform: uppercase;
+        text-align: center;
+        height: 3.125rem;
+        outline: 1px solid $gray_text2;
+        border-radius: 5px;
+        width: 100%;
+        &.exit{
+            transition: all .5s ease-in-out;
+        &:hover{
+            color: white;
+            background-color: #E91C23;
+        }}
     }
     &_image-container{
         display: flex;
@@ -17,7 +34,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            outline: 1px solid gray;
+            outline: 1px solid $gray_text2;
             border-radius: 50%;
             &> img{
                 // max-width: 75%;
@@ -28,7 +45,7 @@
                 object-position: center;
                 border-radius: 50%;
             }
-            &>svg{
+            &>svg, input{
                 visibility: collapse;
                 z-index: 1;
                 left: 0;
@@ -37,11 +54,18 @@
                 height: 5em;
                 transition: all .10s ease-in-out;
                 transform: translateY(-25%);
+                cursor: pointer;
             }
             &:hover>svg{
                 visibility: visible;
                 transition: all .10s ease-in-out;
                 transform: translateY(0);
+            }
+            &>input{
+                height: 7em;
+                transform: translateY(0);
+                visibility: visible;
+                opacity: 0;
             }
         }
     }
