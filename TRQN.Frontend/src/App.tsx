@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MainPage, CatalogPage, ProductPage, AdminPage, CartPage, AuthPage } from 'pages/exports'
+import { MainPage, CatalogPage, ProductPage, AdminPage, CartPage, AuthPage, ProfilePage } from 'pages/exports'
 import { Header, Footer } from "src/components";
 import { AuthContext } from "./AuthContext";
 import { AuthRoute, AdminRoutes, UserRoutes } from "./PrivateRoutes";
@@ -45,6 +45,7 @@ const App = () => {
                     </Route>
                     <Route element={<UserRoutes />}>
                         <Route path="/cart" element={<CartPage />} />
+                        <Route path="/profile" element={<ProfilePage/>} />
                     </Route>
                     <Route element={<AuthRoute />}>
                         <Route path="/auth" element={<AuthPage />} />

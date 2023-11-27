@@ -19,11 +19,15 @@ const Cart = () => {
     api.get("/countries")
     .then((res) => {
       setCountries(res.data)
-      setActiveCountry((res.data[0] as ICountries).id)
+      setActiveCountry((res.data[0] as ICountries).id) // get user data
     })
     .catch((e) => {
 
     })
+  }, [])
+
+  useEffect(() => {
+
   }, [])
 
 
@@ -42,7 +46,7 @@ const Cart = () => {
           <label className='label'>
             * Country or Region
           </label>
-          <select onChange={(e) => setActiveCountry(+e.target.value)}>
+          <select onChange={(e) => setActiveCountry(+e.target.value)} value={activeCountry}>
             {
               countries?.map((e) => (
                 <option value={e.id} key={e.id}>{e.name}</option>

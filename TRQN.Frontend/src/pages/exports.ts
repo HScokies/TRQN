@@ -4,6 +4,7 @@ import ProductPage from "./product";
 import AdminPage from "./admin";
 import CartPage from "./cart";
 import AuthPage from "./auth";
+import ProfilePage from "./profile";
 
 export {
     MainPage,
@@ -11,5 +12,6 @@ export {
     ProductPage,
     AdminPage,
     CartPage,
-    AuthPage
+    AuthPage,
+    ProfilePage
 }
