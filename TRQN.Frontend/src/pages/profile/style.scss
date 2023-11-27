@@ -4,9 +4,6 @@
     margin: 5em 2em;
     background-color: white;
     padding: 1em;
-    & select{
-        margin-bottom: 0;
-    }
     &-button{
         margin-top: 1em;
         display: block;
@@ -41,7 +38,7 @@
                 height: 7em;
                 width: 100%;
                 aspect-ratio: 1;
-                object-fit: contain;
+                object-fit: cover;
                 object-position: center;
                 border-radius: 50%;
             }
@@ -60,6 +57,7 @@
                 visibility: visible;
                 transition: all .10s ease-in-out;
                 transform: translateY(0);
+                background: #FFFFFFAF;        
             }
             &>input{
                 height: 7em;

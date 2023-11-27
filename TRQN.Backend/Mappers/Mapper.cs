@@ -84,5 +84,22 @@ namespace TRQN.Backend.Mappers
                 };
             }
         }
+
+
+        public static ProfileView ToProfileView(this User user)
+        {
+            return new ProfileView()
+            {
+                email = user.email,
+                fullName = user.fullName,
+                street = user.street,
+                apartment = user.apartment,
+                city = user.city,
+                zip = user.zip,
+                country = user.country,
+                telephone = user.telephone,
+                image = user.avatar
+            };
+        }
     }
 }

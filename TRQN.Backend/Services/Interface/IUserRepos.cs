@@ -15,5 +15,8 @@ namespace TRQN.Backend.Services.Interface
         public Task<Roles?> GetRole(string token);
         public Task<List<UserView>> GetUsers();
         public Task<List<UserView>> SearchUsers(string email);
+
+        public Task<Result<bool>> SetUserData(string token, UserDataInput data);
+        public Task<Result<ProfileView>> GetProfile(string token);
     }
 }

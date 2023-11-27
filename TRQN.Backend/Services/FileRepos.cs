@@ -1,5 +1,7 @@
 ﻿using LanguageExt.Common;
+using System.IO;
 using TRQN.Backend.Services.Interface;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TRQN.Backend.Services
 {
@@ -10,6 +12,15 @@ namespace TRQN.Backend.Services
         public FileRepos(IWebHostEnvironment env)
         {
             this.env = env;
+        }
+
+        public async Task AddNewAvatar(string filename, IFormFile image)
+        {
+            string path = Path.Combine(env.WebRootPath, "images", filename);
+            await using (FileStream fs = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(fs);
+            }
         }
 
         public async Task<Result<MemoryStream>> GetImage(string file)
@@ -28,6 +39,28 @@ namespace TRQN.Backend.Services
             }
             mem.Position = 0;
             return new Result<MemoryStream>(mem);
+        }
+
+        public bool isAllowedFormat(string ext)
+        {
+            string[] AllowedExtentions = { ".jpg", ".png" };
+            if (!AllowedExtentions.Contains(ext))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void RemoveOldAvatar(string image)
+        {
+            if (image == "defaultavatar.jpg")
+                return;
+
+            string path = Path.Combine(env.WebRootPath, "images", image);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import './style.scss'
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import api from 'src/api/axiosConfig';
 import { IResponse } from 'src/interfaces';
 import { AuthContext } from 'src/AuthContext';

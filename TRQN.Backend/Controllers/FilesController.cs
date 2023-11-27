@@ -18,7 +18,7 @@ namespace TRQN.Backend.Controllers
             this.logger = logger;
         }
 
-        [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
+
         [HttpGet("images/{file}")]
         public async Task<IActionResult> GetImage(string file)
         {
@@ -37,7 +37,6 @@ namespace TRQN.Backend.Controllers
                     return StatusCode(500);
             });
         }
-
 
     }
 }

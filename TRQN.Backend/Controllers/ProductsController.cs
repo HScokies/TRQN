@@ -28,6 +28,7 @@ namespace TRQN.Backend.Controllers
             return Ok(res);
         }
 
+        [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
         [HttpGet("category={catid:Int}")]
         public async Task<IActionResult> GetCategoryProducts(int catid)
         {

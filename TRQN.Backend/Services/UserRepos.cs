@@ -8,6 +8,7 @@ using TRQN.Backend.Mappers;
 using TRQN.Backend.Models;
 using TRQN.Backend.Services.Interface;
 using TRQN.Backend.Views;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TRQN.Backend.Services
 {
@@ -15,11 +16,13 @@ namespace TRQN.Backend.Services
     {
         private readonly AppDbContext ctx;
         private readonly IBlowfishEncryption encryption;
+        private readonly IFilesRepos files;
 
-        public UserRepos(AppDbContext ctx, IBlowfishEncryption encryption)
+        public UserRepos(AppDbContext ctx, IBlowfishEncryption encryption, IFilesRepos files)
         {
             this.ctx = ctx;
             this.encryption = encryption;
+            this.files = files;
         }
 
         public async Task<Result<bool>> AddToCart(string token, int sizeId)
@@ -128,5 +131,62 @@ namespace TRQN.Backend.Services
             }
             return res;
         }
+
+        public async Task<Result<bool>> SetUserData(string token, UserDataInput data)
+        {
+            var country = await ctx.countries.FirstOrDefaultAsync(c => c.id == data.countryId);
+            if (country is null)
+            {
+                var ex = new UserException(StatusCodes.Status404NotFound,"Specified country cannot be found");
+                return new Result<bool>(ex);
+            }
+
+            var res = await ctx.users.FirstOrDefaultAsync(u => u.token.ToString() == token);
+            if (res is null)
+            {
+                var ex = new UserException();
+                return new Result<bool>(ex);
+            }
+            
+            if (data.image != null)
+            {
+                string ext = Path.GetExtension(data.image.FileName);
+                if (!files.isAllowedFormat(ext))
+                {
+                    var ex = new UserException(StatusCodes.Status400BadRequest, "Invalid avatar format");
+                    return new Result<bool>(ex);
+                }
+                files.RemoveOldAvatar(res.avatar);
+
+                string newFileName = $"{res.id}avatar{ext}";
+                await files.AddNewAvatar(newFileName, data.image);
+                res.avatar = newFileName;
+            }
+
+            res.fullName = data.fullName;
+            res.street = data.street;
+            res.apartment = data.apartment;
+            res.city = data.city;
+            res.zip = data.zip;
+            res.countryId = data.countryId;
+            res.telephone = data.telephone;
+
+            res.country = country;
+            res.countryId = data.countryId;
+
+            await ctx.SaveChangesAsync();
+            return new Result<bool>(true);
+        }
+        public async Task<Result<ProfileView>> GetProfile(string token)
+        {
+            var res = await ctx.users.Include(c => c.country).FirstOrDefaultAsync(u => u.token.ToString() == token);
+            if (res is null)
+            {
+                var ex = new UserException();
+                return new Result<ProfileView>(ex);
+            }
+            return new Result<ProfileView>(res.ToProfileView());
+        }
+
     }
 }

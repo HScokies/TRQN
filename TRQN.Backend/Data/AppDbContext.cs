@@ -27,6 +27,7 @@ namespace TRQN.Backend.Data
             modelBuilder.Entity<Country>().Property(p => p.tax).HasColumnType("decimal(3,2)");
             modelBuilder.Entity<Country>().Property(p => p.shipping).HasColumnType("smallmoney");
 
+
             modelBuilder.Entity<Category>().HasData(
                 new Category() { id = 1, name = "Sneakers" },
                 new Category() { id = 2, name = "High-Tops" },

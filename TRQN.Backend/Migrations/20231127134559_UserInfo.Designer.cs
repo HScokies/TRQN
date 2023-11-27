@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TRQN.Backend.Data;
 
@@ -11,9 +12,11 @@ using TRQN.Backend.Data;
 namespace TRQN.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231127134559_UserInfo")]
+    partial class UserInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +178,7 @@ namespace TRQN.Backend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("apartment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("avatar")
@@ -182,9 +186,10 @@ namespace TRQN.Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("city")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("countryId")
+                    b.Property<int>("countryId")
                         .HasColumnType("int");
 
                     b.Property<string>("email")
@@ -192,6 +197,7 @@ namespace TRQN.Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("fullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("password")
@@ -202,15 +208,14 @@ namespace TRQN.Backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("telephone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("token")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("zip")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -265,7 +270,9 @@ namespace TRQN.Backend.Migrations
                 {
                     b.HasOne("TRQN.Backend.Models.Country", "country")
                         .WithMany()
-                        .HasForeignKey("countryId");
+                        .HasForeignKey("countryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("country");
                 });
