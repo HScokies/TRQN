@@ -1,18 +1,23 @@
-import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, NavigateFunction } from "react-router-dom";
 import './style.scss'
 import { useContext, useState } from "react";
 import { AuthContext } from "src/AuthContext";
 import ProfileIcon from "../profileIcon";
+import api from "src/api/axiosConfig";
 
-export const logout = () => {
+export const logout = (navigate: NavigateFunction, setRole: Function) => {
 	if (confirm("Are you sure you want to log out?")){
-
+		api.get("/users/logout")
+		.then(() => {
+			setRole(null)
+			navigate('/')
+		})
 	}
 }
 
 const Header = () => {
 	const navigate = useNavigate()
-
+    const { setIsAdmin } = useContext(AuthContext)
 	const [isCollapsed, setIsCollapsed] = useState(true);
 	const [Search, setSearch] = useState("");
 	const [menuOpened, setMenuOpened] = useState(false);
@@ -107,7 +112,7 @@ const Header = () => {
 					{
 						isAdmin ?
 							<span className="iconwrapper" style={{transform: "scaleX(-1)"}}>
-								<svg onClick={() => logout()} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+								<svg onClick={() => logout(navigate, setIsAdmin)} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
 									<g  transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
 										<path d="M2184 4461 c-44 -27 -60 -77 -41 -124 31 -72 -37 -67 942 -67 747 0 889 -2 938 -15 103 -27 167 -82 216 -185 l26 -55 0 -1455 0 -1455 -26 -55 c-37 -80 -81 -125 -157 -162 l-67 -33 -911 -5 c-873 -5 -913 -6 -933 -24 -33 -30 -45 -78 -27 -119 29 -71 -24 -67 968 -67 984 0 961 -1 1082 62 78 41 183 146 224 224 65 124 62 42 62 1634 0 1592 3 1510 -62 1634 -41 78 -146 183 -224 224 -121 63 -98 62 -1084 62 -865 0 -896 -1 -926 -19z" />
 										<path d="M1554 3614 c-40 -20 -900 -882 -909 -912 -19 -63 -14 -68 458 -540 449 -449 453 -452 493 -452 74 0 128 71 104 136 -6 16 -163 181 -353 372 l-342 342 1164 0 c1067 0 1165 1 1191 17 58 34 68 116 21 164 l-29 29 -1173 0 -1173 0 346 348 c268 268 347 354 353 379 9 44 -18 97 -60 117 -41 20 -52 20 -91 0z" />
@@ -154,9 +159,9 @@ const Header = () => {
 							<NavLink to='/auth' onClick={() => toggleMenu(false)} className='navlinks-link login'>
 								Log in
 							</NavLink> : 
-							<NavLink to='/auth' onClick={() => {logout();toggleMenu(false)}} className='navlinks-link login'>
+							<a onClick={() => {logout(navigate, setIsAdmin);toggleMenu(false)}} className='navlinks-link login'>
 								Log out
-							</NavLink>
+							</a>
 					}
 				</nav>
 			</div>

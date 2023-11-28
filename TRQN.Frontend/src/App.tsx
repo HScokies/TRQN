@@ -4,7 +4,7 @@ import { Header, Footer } from "src/components";
 import { AuthContext } from "./AuthContext";
 import { AuthRoute, AdminRoutes, UserRoutes } from "./PrivateRoutes";
 import api from "./api/axiosConfig";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 
 
@@ -33,7 +33,7 @@ const App = () => {
         }
         getRandomProducts();
         checkIfAdmin()
-    }, [])
+    }, [isAdmin])
 
     return (
         <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>

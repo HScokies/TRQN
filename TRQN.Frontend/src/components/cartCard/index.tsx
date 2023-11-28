@@ -24,12 +24,13 @@ interface CartData {
 }
 
 interface Props {
-    id: number
+    id: number,
+    shippingDataChanged: boolean
 }
 
 
 
-const cartCard = ({ id }: Props) => {
+const cartCard = ({ id, shippingDataChanged }: Props) => {
     const [data, setData] = useState<CartData>()
     const [countryData, setCountryData] = useState<ICountryData>({ tax: 0, shipping: 0 })
     const [total, setTotal] = useState(0)
@@ -50,7 +51,6 @@ const cartCard = ({ id }: Props) => {
             api.get(`/countries/${id}`)
                 .then((res) => {
                     const cData: ICountryData = res.data;
-                    console.log(cData, data)
                     if (!data) return
                     setTotal(data?.subtotal * cData.tax + cData.shipping)
                     setCountryData({ tax: data?.subtotal * (cData.tax - 1), shipping: cData.shipping })
@@ -64,11 +64,6 @@ const cartCard = ({ id }: Props) => {
             .then(() => {
                 getCartData()
             })
-    }
-
-    const handleSubmit = () => {
-        if (confirm("Save shipping address?"))
-            submitUserData()
     }
 
     const OutputItems = () => (
@@ -104,7 +99,7 @@ const cartCard = ({ id }: Props) => {
                 <h2>Order total</h2>
                 <span>${total.toFixed(2)}</span>
             </div>
-            <button onClick={() => handleSubmit()} className='buy_button'>Place Order</button>
+            <button onClick={() => {if (shippingDataChanged) submitUserData()}} className='buy_button'>Place Order</button>
         </>
     )
 

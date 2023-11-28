@@ -1,10 +1,12 @@
 import './style.scss'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import api, { BASE_URL } from 'src/api/axiosConfig';
 import Input from 'src/components/input';
 import { logout } from 'src/components/header';
 import { ICountries } from '../cart';
 import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from 'src/AuthContext';
 
 export interface IProfile{
 	email: string
@@ -17,10 +19,10 @@ export interface IProfile{
 	telephone: string,
 	image: string
 }
-
 const ProfilePage = () => {
+    const { setIsAdmin } = useContext(AuthContext)
     const [activeCountry, setActiveCountry] = useState<number>(-1)
-
+    const navigate = useNavigate()
     const [countries, setCountries] = useState<ICountries[]>()
     const [profile, setProfile] = useState<IProfile | null>(null)
     const [avatar, setAvatar] = useState<string>()
@@ -102,7 +104,7 @@ const ProfilePage = () => {
                 <Input name='telephone' type='telephone' label='Telephone' defaultValue={profile?.telephone} pattern='^\+[1-9]{1}[0-9]{3,14}$' />
                 <button  type="submit" className='profile-page-button save'>Save</button>
             </form>
-            <button className='profile-page-button exit' onClick={() => logout()}>Log out</button>
+            <button className='profile-page-button exit' onClick={() => logout(navigate, setIsAdmin)}>Log out</button>
         </div>
     );
 }

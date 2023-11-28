@@ -12,20 +12,25 @@ export interface ICountries {
 }
 
 export const submitUserData = () => {
-  const form = document.getElementById('userData-form') as HTMLFormElement;
-  let data = new FormData(form)
-  api.post("/users/profile", data)
-    .then(() => alert("Updated successfully"))
-    .catch((e: AxiosError) => {
-      alert(e.response?.statusText)
-    })
+  if (confirm("Save shipping data?")) {
+    const form = document.getElementById('userData-form') as HTMLFormElement;
+    let data = new FormData(form)
+    api.post("/users/profile", data)
+      .then(() => alert("Updated successfully"))
+      .catch((e: AxiosError) => {
+        alert(e.response?.statusText)
+      })
+  }
 }
+
 
 const Cart = () => {
   const [activeCountry, setActiveCountry] = useState<number>(-1)
 
   const [countries, setCountries] = useState<ICountries[]>()
   const [shippingData, setShippingData] = useState<IProfile>()
+
+  const [shippingDataChanged, setChanged] = useState(false)
 
   useEffect(() => {
     const getCountries = () => {
@@ -57,16 +62,21 @@ const Cart = () => {
         <h1 className='title'>Shipping address</h1>
         <span className='line'></span>
         <form id='userData-form'>
-          <Input name='fullName' type='text' label='* Full Name' defaultValue={shippingData?.fullName} />
-          <Input name='street' type='text' label='* Street Address' defaultValue={shippingData?.street} />
-          <Input name='apartment' type='text' label='Apartment, Suite, Unit, Building, Floor, etc.' pattern='[a-zA-Z0-9, ]+' defaultValue={shippingData?.apartment} />
-          <Input name='city' type='text' label='* City' defaultValue={shippingData?.city} />
-          <Input name='zip' type='text' label='* Zip / Postal code' pattern='[0-9]{5,6}' defaultValue={shippingData?.zip} />
+          <Input name='fullName' type='text' label='* Full Name' defaultValue={shippingData?.fullName} setChanged={setChanged} />
+          <Input name='street' type='text' label='* Street Address' defaultValue={shippingData?.street} setChanged={setChanged} />
+          <Input name='apartment' type='text' label='Apartment, Suite, Unit, Building, Floor, etc.' pattern='[a-zA-Z0-9, ]+' defaultValue={shippingData?.apartment} setChanged={setChanged} />
+          <Input name='city' type='text' label='* City' defaultValue={shippingData?.city} setChanged={setChanged} />
+          <Input name='zip' type='text' label='* Zip / Postal code' pattern='[0-9]{5,6}' defaultValue={shippingData?.zip} setChanged={setChanged} />
           <div className='select_container'>
             <label className='label'>
               * Country or Region
             </label>
-            <select name='countryId' onChange={(e) => setActiveCountry(+e.target.value)} value={activeCountry}>
+            <select name='countryId' onChange={(e) => {
+              const cId = +e.target.value
+              setActiveCountry(cId)
+              if (cId != shippingData?.country.id)
+                setChanged(true)
+            }} value={activeCountry}>
               {
                 countries?.map((e) => (
                   <option value={e.id} key={e.id}>{e.name}</option>
@@ -74,13 +84,13 @@ const Cart = () => {
               }
             </select>
           </div>
-          <Input name='telephone' type='telephone' label='Telephone' pattern='^\+[1-9]{1}[0-9]{3,14}$' defaultValue={shippingData?.telephone} />
+          <Input name='telephone' type='telephone' label='Telephone' pattern='^\+[1-9]{1}[0-9]{3,14}$' defaultValue={shippingData?.telephone}  setChanged={setChanged}/>
         </form>
         <label className='label'>* Required</label>
       </div>
       <div className='right'>
         <h1 className='title summary'>order summary</h1>
-        <CartCard id={activeCountry} />
+        <CartCard shippingDataChanged={shippingDataChanged} id={activeCountry} />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const AuthPage = () => {
     }
 
     const PostData = (url: string, data: FormData) => {
-        api.post(url, data).then((res) => { console.debug(url, res.status); CheckIfAdmin()}).catch((e: AxiosError) => alert((e.response?.data as IResponse).message))
+        api.post(url, data).then((res) => CheckIfAdmin()).catch((e: AxiosError) => alert((e.response?.data as IResponse).message))
     }
 
     const CheckIfAdmin = () => {
